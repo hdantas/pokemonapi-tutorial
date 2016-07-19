@@ -1,0 +1,135 @@
+swagger: '2.0'
+
+info:
+  version: "2.0.0"
+  title: Flask-restful Tutorial
+
+paths:
+  /pokemon:
+    get:
+      description: 'Gets `Pokémon` objects.'
+      parameters:
+      - name: number
+        description: 'Number of the Pokémon to retrieve'
+        in: query
+        type: integer
+        format: int32
+        required: false
+          
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfPokemon
+            type: array
+            items:
+              $ref: '#/definitions/Pokemon'
+              
+    post:
+      description: 'Create new `Pokémon` object.'
+      parameters:
+        - name: pokemon
+          in: body
+          description: 'New Pokémon to add to Pokédex'
+          required: true
+          schema:
+            $ref: '#/definitions/Pokemon'
+          
+      responses:
+        200:
+          description: 'Successful response'
+          schema:
+              $ref: '#/definitions/Pokemon'
+    
+    put:
+      description: 'Update existing `Pokemon` object.'
+      parameters:
+        - name: number
+          description: 'Number of the Pokémon to update'
+          in: query
+          type: integer
+          format: int32
+          required: true
+        - name: pokemon
+          in: body
+          description: 'New data for existing Pokémon'
+          required: true
+          schema:
+            $ref: '#/definitions/Pokemon'
+          
+      responses:
+        200:
+          description: Successful response
+          schema:
+              $ref: '#/definitions/Pokemon'
+              
+    
+    delete:
+      description: 'Delete `Pokémon` object.'
+      parameters:
+      - name: number
+        description: 'Number of the Pokémon to delete'
+        in: query
+        type: integer
+        format: int32
+        required: true
+          
+      responses:
+        200:
+          description: 'Successful response'
+          schema:
+            title: Success
+            type: object
+            required:
+            - success
+            properties:
+              success:
+                type: boolean
+              
+definitions:
+  Pokemon:
+    required:
+    - name
+    - number
+    - type
+    - weaknesses
+    - evolutions
+    
+    properties:
+      name:
+        type: string
+        description: Name of the Pokémon
+      number:
+        type: integer
+        format: int32
+        description: Number of the Pokémon
+      type:
+        type: array
+        description: List of the types of this Pokémon
+        items:
+          type: string
+      weaknesses:
+        type: array
+        description: List of the weaknesses of this Pokémon
+        items:
+          type: string
+      evolutions:
+        type: array
+        description: List of the subsequent evolutions of this Pokémon
+        items:
+          type: object
+          required:
+          - name
+          - number
+          properties:
+            name:
+              description: Name of the evolution
+              type: string
+            number:
+              description: Number of the evolution
+              type: integer
+              format: int32
+          
+        
+        
+        

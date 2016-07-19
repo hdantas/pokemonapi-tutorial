@@ -1,0 +1,48 @@
+swagger: '2.0'
+
+info:
+  version: "1.0.0"
+  title: Flask-RESTful Tutorial
+
+paths:
+  /pokemon:
+    get:
+      description: 'Gets `Pokémon` objects.'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfPokemon
+            type: array
+            items:
+              $ref: '#/definitions/Pokemon'
+              
+    post:
+      description: 'Creates new `Pokémon` object.'
+      parameters:
+        - name: pokemon
+          in: body
+          description: 'New Pokémon to add to Pokédex'
+          required: true
+          schema:
+            $ref: '#/definitions/Pokemon'
+          
+      responses:
+        200:
+          description: Successful response
+          schema:
+              $ref: '#/definitions/Pokemon'
+              
+definitions:
+  Pokemon:
+    required:
+      - name
+      - number
+    properties:
+      name:
+        description: Name of the Pokémon
+        type: string
+      number:
+        description: Number of the Pokémon
+        type: integer
+        format: int32
